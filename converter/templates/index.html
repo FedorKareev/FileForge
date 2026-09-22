@@ -68,18 +68,18 @@
 
         <form method="post" enctype="multipart/form-data" id="form">
             {% csrf_token %}
-            <input type="file" name="file" id="fileInput">
+            <input type="file" name="file" id="fileInput" accept="application/pdf,.pdf">
 
             <div class="buttons">
                 <button type="button" id="uploadBtn">Загрузить</button>
-                <button type="submit" name="convert" id="convertBtn">Конвертировать</button>
+                <button type="submit" name="convert" id="convertBtn" disabled>Конвертировать</button>
                 <button type="button" id="downloadBtn"
                         {% if not result %}disabled{% endif %}>Скачать</button>
             </div>
         </form>
 
-        <div class="info" id="info">
-            {% if result %}Файл: {{ result }}{% else %}Файл не выбран{% endif %}
+        <div class="info" id="info" role="status">
+            {% if error %}{{ error }}{% elif result %}{{ result }}{% else %}Файл не выбран{% endif %}
         </div>
 
         <a id="downloadLink" href="{% url 'download' %}" style="display:none;"></a>
@@ -100,8 +100,10 @@
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
                 info.textContent = 'Выбран файл: ' + fileInput.files[0].name;
+                convertBtn.disabled = false;
             } else {
                 info.textContent = 'Файл не выбран';
+                convertBtn.disabled = true;
             }
         });
 
