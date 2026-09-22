@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Конвертер файлов</title>
+    <style>
+        body {
+            background: #1e1e1e;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .box {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 8px;
+            width: 420px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #444;
+            color: #e0e0e0;
+            border: 1px solid #666;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #555;
+        }
+        button:disabled {
+            background: #333;
+            color: #777;
+            border-color: #444;
+            cursor: not-allowed;
+        }
+        .info {
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 10px;
+            min-height: 18px;
+            word-break: break-all;
+        }
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Конвертер файлов</h1>
+
+        <form method="post" enctype="multipart/form-data" id="form">
+            {% csrf_token %}
+            <input type="file" name="file" id="fileInput">
+
+            <div class="buttons">
+                <button type="button" id="uploadBtn">Загрузить</button>
+                <button type="submit" name="convert" id="convertBtn">Конвертировать</button>
+                <button type="button" id="downloadBtn"
+                        {% if not result %}disabled{% endif %}>Скачать</button>
+            </div>
+        </form>
+
+        <div class="info" id="info">
+            {% if result %}Файл: {{ result }}{% else %}Файл не выбран{% endif %}
+        </div>
+
+        <a id="downloadLink" href="{% url 'download' %}" style="display:none;"></a>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const convertBtn = document.getElementById('convertBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadLink = document.getElementById('downloadLink');
+        const info = document.getElementById('info');
+
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                info.textContent = 'Выбран файл: ' + fileInput.files[0].name;
+            } else {
+                info.textContent = 'Файл не выбран';
+            }
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            downloadLink.click();
+        });
+    </script>
+</body>
+</html>
