@@ -4,94 +4,278 @@
     <meta charset="UTF-8">
     <title>Конвертер файлов</title>
     <style>
-        body {
-            background: #1e1e1e;
-            color: #e0e0e0;
+        * {
+            box-sizing: border-box;
+        }
+        :root {
+            color-scheme: light;
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: #202536;
+            background: #f4f6fb;
+        }
+        body {
             min-height: 100vh;
             margin: 0;
+            background: #f4f6fb;
         }
-        .box {
-            background: #2a2a2a;
-            padding: 30px;
-            border-radius: 8px;
-            width: 420px;
+        .site-header {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            padding: 0 max(24px, calc((100% - 1140px) / 2));
+            background: #fff;
+            border-bottom: 1px solid #e9edf5;
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #202536;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+        .brand-mark {
+            display: grid;
+            width: 32px;
+            height: 32px;
+            place-items: center;
+            border-radius: 9px;
+            background: #eee9ff;
+            color: #7143df;
+            font-size: 17px;
+            font-weight: 700;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 48px 24px 0;
+        }
+        .intro {
+            margin-bottom: 26px;
             text-align: center;
         }
-        h1 {
-            font-size: 20px;
-            margin-bottom: 20px;
+        .intro h1 {
+            margin: 0 0 10px;
+            color: #202536;
+            font-size: clamp(26px, 4vw, 32px);
+            letter-spacing: -0.7px;
+        }
+        .intro p {
+            margin: 0;
+            color: #6b7283;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .box {
+            width: min(100%, 1080px);
+            padding: 14px;
+            border: 1px solid #edf0f6;
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 10px 35px rgb(31 42 68 / 5%);
+            text-align: center;
+        }
+        .upload-area {
+            display: flex;
+            min-height: 270px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            border: 2px dashed #d9d5f4;
+            border-radius: 13px;
         }
         .buttons {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-bottom: 15px;
+            margin: 18px 0 0;
         }
         button {
-            background: #444;
-            color: #e0e0e0;
-            border: 1px solid #666;
-            padding: 10px 18px;
-            border-radius: 4px;
+            min-height: 42px;
+            padding: 0 18px;
+            border: 1px solid #e1e5ee;
+            border-radius: 9px;
+            background: #fff;
+            color: #394154;
             cursor: pointer;
+            font: inherit;
             font-size: 14px;
+            transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
         }
         button:hover {
-            background: #555;
+            border-color: #c9c1f2;
+            background: #f8f6ff;
         }
         button:disabled {
-            background: #333;
-            color: #777;
-            border-color: #444;
+            border-color: #e8eaf0;
+            background: #f1f2f5;
+            color: #a1a6b2;
             cursor: not-allowed;
         }
+        .primary-button {
+            border-color: #7545e5;
+            background: #7545e5;
+            color: #fff;
+        }
+        .primary-button:hover {
+            border-color: #6235cf;
+            background: #6235cf;
+            color: #fff;
+        }
+        .primary-button:disabled {
+            border-color: #e8eaf0;
+            background: #f1f2f5;
+            color: #a1a6b2;
+        }
+        .upload-prompt {
+            margin: 0;
+            color: #252b3a;
+            font-size: 19px;
+            font-weight: 600;
+        }
+        .file-hint {
+            margin: 9px 0 0;
+            color: #9299a9;
+            font-size: 13px;
+        }
         .info {
+            min-height: 20px;
+            margin-top: 16px;
+            color: #727b8e;
             font-size: 14px;
-            color: #aaa;
-            margin-top: 10px;
-            min-height: 18px;
             word-break: break-all;
         }
         input[type="file"] {
             display: none;
         }
+        .tool-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 42px auto 56px;
+            padding: 0 24px;
+        }
+        .tool-button {
+            min-height: 42px;
+            padding: 0 18px;
+            border: 1px solid #e8eaf1;
+            border-radius: 999px;
+            background: #fff;
+            color: #343c4e;
+            box-shadow: 0 3px 10px rgb(31 42 68 / 4%);
+        }
+        .tool-button:hover {
+            border-color: #d7cff7;
+            background: #f8f6ff;
+            color: #6438d2;
+        }
+        @media (max-width: 600px) {
+            .site-header {
+                height: 58px;
+                padding: 0 18px;
+            }
+            main {
+                padding: 36px 16px 0;
+            }
+            .intro {
+                margin-bottom: 22px;
+            }
+            .intro p {
+                font-size: 14px;
+            }
+            .box {
+                padding: 9px;
+                border-radius: 14px;
+            }
+            .upload-area {
+                min-height: 250px;
+                padding: 22px 12px;
+            }
+            .buttons {
+                gap: 8px;
+            }
+            .buttons button {
+                padding: 0 12px;
+                font-size: 13px;
+            }
+            .tool-buttons {
+                gap: 10px;
+                margin: 28px auto 36px;
+                padding: 0 16px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>Конвертер файлов</h1>
-
-        <form method="post" enctype="multipart/form-data" id="form">
-            {% csrf_token %}
-            <input type="file" name="file" id="fileInput" accept="application/pdf,.pdf">
-
-            <div class="buttons">
-                <button type="button" id="uploadBtn">Загрузить</button>
-                <button type="submit" name="convert" id="convertBtn" disabled>Конвертировать</button>
-                <button type="button" id="downloadBtn"
-                        {% if not result %}disabled{% endif %}>Скачать</button>
-            </div>
-        </form>
-
-        <div class="info" id="info" role="status">
-            {% if error %}{{ error }}{% elif result %}{{ result }}{% else %}Файл не выбран{% endif %}
+    <header class="site-header">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">F</span>FileForge</div>
+    </header>
+    <main>
+        <div class="intro">
+            <h1>Конвертер файлов</h1>
+            <p>Преобразуйте страницы PDF в изображения JPG</p>
         </div>
+        <section class="box" id="converterPanel">
+            <div class="upload-area">
+                <p class="upload-prompt">Загрузите PDF-файл</p>
+                <p class="file-hint">Выберите PDF, чтобы подготовить страницы к конвертации</p>
 
-        <a id="downloadLink" href="{% url 'download' %}" style="display:none;"></a>
-    </div>
+                <form method="post" enctype="multipart/form-data" id="form">
+                    {% csrf_token %}
+                    <input type="file" name="file" id="fileInput" accept="application/pdf,.pdf">
+
+                    <div class="buttons">
+                        <button type="button" class="primary-button" id="uploadBtn">Выбрать PDF</button>
+                        <button type="submit" name="convert" class="primary-button" id="convertBtn" disabled>Конвертировать</button>
+                        <button type="button" id="downloadBtn"
+                                {% if not result %}disabled{% endif %}>Скачать</button>
+                    </div>
+                </form>
+
+                <div class="info" id="info" role="status">
+                    {% if error %}{{ error }}{% elif result %}{{ result }}{% else %}Файл не выбран{% endif %}
+                </div>
+            </div>
+
+            <a id="downloadLink" href="{% url 'download' %}" style="display:none;"></a>
+        </section>
+    </main>
+
+    <nav class="tool-buttons" aria-label="Инструменты FileForge">
+        <button type="button" class="tool-button" id="pdfToJpgBtn"
+                aria-controls="converterPanel" aria-expanded="true">Из PDF в JPG</button>
+        <button type="button" class="tool-button" id="qrBtn"
+                aria-controls="converterPanel" aria-expanded="true">Просканировать QR</button>
+    </nav>
 
     <script>
+        const converterPanel = document.getElementById('converterPanel');
+        const pdfToJpgBtn = document.getElementById('pdfToJpgBtn');
+        const qrBtn = document.getElementById('qrBtn');
         const fileInput = document.getElementById('fileInput');
         const uploadBtn = document.getElementById('uploadBtn');
         const convertBtn = document.getElementById('convertBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const downloadLink = document.getElementById('downloadLink');
         const info = document.getElementById('info');
+
+        pdfToJpgBtn.addEventListener('click', () => {
+            converterPanel.hidden = false;
+            pdfToJpgBtn.setAttribute('aria-expanded', 'true');
+            qrBtn.setAttribute('aria-expanded', 'true');
+        });
+
+        qrBtn.addEventListener('click', () => {
+            converterPanel.hidden = true;
+            pdfToJpgBtn.setAttribute('aria-expanded', 'false');
+            qrBtn.setAttribute('aria-expanded', 'false');
+        });
 
         uploadBtn.addEventListener('click', () => {
             fileInput.click();
