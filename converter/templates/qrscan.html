@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>QR-сканер - FileForge</title>
+    <style>
+        * { box-sizing: border-box; }
+        :root { color-scheme: light; font-family: Arial, sans-serif; color: #202536; background: #f4f6fb; }
+        body { min-height: 100vh; margin: 0; background: #f4f6fb; }
+        .site-header { height: 64px; display: flex; align-items: center; padding: 0 max(24px, calc((100% - 1140px) / 2)); background: #fff; border-bottom: 1px solid #e9edf5; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; color: #202536; font-size: 20px; font-weight: 700; letter-spacing: -0.4px; text-decoration: none; }
+        .brand-mark { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 9px; background: #eee9ff; color: #7143df; font-size: 17px; font-weight: 700; }
+        main { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px 24px 0; }
+        .intro { margin-bottom: 26px; text-align: center; }
+        .intro h1 { margin: 0 0 10px; color: #202536; font-size: clamp(26px, 4vw, 32px); letter-spacing: -0.7px; }
+        .intro p { margin: 0; color: #6b7283; font-size: 16px; line-height: 1.6; }
+        .box { width: min(100%, 800px); padding: 14px; border: 1px solid #edf0f6; border-radius: 18px; background: #fff; box-shadow: 0 10px 35px rgb(31 42 68 / 5%); text-align: center; }
+        .upload-area { display: flex; min-height: 270px; flex-direction: column; justify-content: center; align-items: center; padding: 30px; border: 2px dashed #d9d5f4; border-radius: 13px; }
+        .buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 18px 0 0; }
+        button { min-height: 42px; padding: 0 18px; border: 1px solid #e1e5ee; border-radius: 9px; background: #fff; color: #394154; cursor: pointer; font: inherit; font-size: 14px; transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease; }
+        button:hover { border-color: #c9c1f2; background: #f8f6ff; }
+        button:disabled { border-color: #e8eaf0; background: #f1f2f5; color: #a1a6b2; cursor: not-allowed; }
+        .primary-button { border-color: #7545e5; background: #7545e5; color: #fff; }
+        .primary-button:hover { border-color: #6235cf; background: #6235cf; color: #fff; }
+        .primary-button:disabled { border-color: #e8eaf0; background: #f1f2f5; color: #a1a6b2; }
+        .upload-prompt { margin: 0; color: #252b3a; font-size: 19px; font-weight: 600; }
+        .file-hint { margin: 9px 0 0; color: #9299a9; font-size: 13px; }
+        .info { min-height: 20px; margin-top: 16px; color: #727b8e; font-size: 14px; word-break: break-all; white-space: pre-wrap; text-align: left; }
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a href="/" class="brand"><span class="brand-mark" aria-hidden="true">F</span>FileForge</a>
+    </header>
+    <main>
+        <div class="intro">
+            <h1>QR-сканер</h1>
+            <p>Загрузите картинку с QR-кодом, чтобы прочитать зашифрованную информацию</p>
+        </div>
+        <section class="box">
+            <div class="upload-area">
+                <p class="upload-prompt">Загрузите изображение</p>
+                <p class="file-hint">Поддерживаются форматы JPG, PNG</p>
+
+                <form method="post" enctype="multipart/form-data" id="form">
+                    {% csrf_token %}
+                    <input type="file" name="file" id="fileInput" accept="image/*">
+
+                    <div class="buttons">
+                        <button type="button" class="primary-button" id="uploadBtn">Выбрать фото</button>
+                        <button type="submit" name="scan" class="primary-button" id="scanBtn" disabled>Сканировать</button>
+                    </div>
+                </form>
+
+                <div class="info" id="info" role="status">
+                    {% if error %}<span style="color: #e53935;">{{ error }}</span>{% elif result %}{{ result }}{% else %}Файл не выбран{% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const scanBtn = document.getElementById('scanBtn');
+        const info = document.getElementById('info');
+
+        uploadBtn.addEventListener('click', () => { fileInput.click(); });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                info.textContent = 'Выбран файл: ' + fileInput.files[0].name;
+                scanBtn.disabled = false;
+            } else {
+                info.textContent = 'Файл не выбран';
+                scanBtn.disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>

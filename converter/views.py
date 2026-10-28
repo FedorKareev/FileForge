@@ -21,9 +21,7 @@ def index(request):
         else:
             job_id = uuid.uuid4().hex
             job_dir = Path(settings.MEDIA_ROOT) / 'jobs' / job_id
-            source_path = save_uploaded_file(
-                uploaded_file.read(), job_dir / 'source.pdf'
-            )
+            source_path = save_uploaded_file(uploaded_file.read(), job_dir / 'source.pdf')
 
             try:
                 image_paths = convert_pdf_to_images(source_path, job_dir / 'pages')

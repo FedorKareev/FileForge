@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>FileForge - Инструменты</title>
+    <style>
+        * { box-sizing: border-box; }
+        :root { color-scheme: light; font-family: Arial, sans-serif; color: #202536; background: #f4f6fb; }
+        body { min-height: 100vh; margin: 0; background: #f4f6fb; }
+        .site-header { height: 64px; display: flex; align-items: center; padding: 0 max(24px, calc((100% - 1140px) / 2)); background: #fff; border-bottom: 1px solid #e9edf5; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; color: #202536; font-size: 20px; font-weight: 700; letter-spacing: -0.4px; text-decoration: none; }
+        .brand-mark { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 9px; background: #eee9ff; color: #7143df; font-size: 17px; font-weight: 700; }
+        main { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 24px 0; }
+        .intro { margin-bottom: 40px; text-align: center; }
+        .intro h1 { margin: 0 0 10px; color: #202536; font-size: clamp(26px, 4vw, 36px); letter-spacing: -0.7px; }
+        .intro p { margin: 0; color: #6b7283; font-size: 16px; line-height: 1.6; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: min(100%, 1080px); }
+        .card { padding: 30px; border: 1px solid #edf0f6; border-radius: 18px; background: #fff; box-shadow: 0 10px 35px rgb(31 42 68 / 5%); text-align: left; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgb(117 69 229 / 15%); border-color: #d9d5f4; }
+        .card h2 { margin: 0 0 10px; font-size: 20px; color: #7143df; }
+        .card p { margin: 0; color: #6b7283; font-size: 14px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a href="/" class="brand"><span class="brand-mark" aria-hidden="true">F</span>FileForge</a>
+    </header>
+    <main>
+        <div class="intro">
+            <h1>Добро пожаловать в FileForge</h1>
+            <p>Выберите инструмент, который вам нужен</p>
+        </div>
+        <div class="grid">
+            <a href="/convert/" class="card">
+                <h2>Из PDF в JPG</h2>
+                <p>Преобразуйте страницы PDF в изображения PNG и скачайте архивом.</p>
+            </a>
+            <a href="/qr/" class="card">
+                <h2>QR-сканер</h2>
+                <p>Загрузите картинку с QR-кодом, чтобы прочитать зашифрованную информацию.</p>
+            </a>
+            <a href="/ocr/" class="card">
+                <h2>Фото в текст</h2>
+                <p>Извлеките печатный текст с любого изображения или скана.</p>
+            </a>
+        </div>
+    </main>
+</body>
+</html>
